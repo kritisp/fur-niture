@@ -1,14 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-  // --- 1. Sticky Header ---
+  // --- 1. Sticky Header + scroll progress ---
   const header = document.getElementById('main-header');
+  const progressThumb = document.querySelector('.scroll-progress-thumb');
+
+  function updateScrollProgress() {
+    if (!progressThumb) return;
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? Math.min(Math.max(scrollTop / docHeight, 0), 1) : 0;
+    progressThumb.style.height = `${progress * 100}%`;
+  }
+
   window.addEventListener('scroll', () => {
-    if (document.body.classList.contains('slideshow-active')) return;
     if (window.scrollY > 50) {
       header.classList.add('scrolled');
     } else {
       header.classList.remove('scrolled');
     }
+    updateScrollProgress();
   });
 
   // --- 2. Mobile Drawer Menu ---
@@ -955,91 +965,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function checkSlideshowActive() {
-    const shouldBeActive = window.innerWidth > 992 && window.innerHeight > 650;
-    const isActive = document.body.classList.contains('slideshow-active');
-
-    if (shouldBeActive && !isActive) {
-      document.body.classList.add('slideshow-active');
-      createDotsNav();
-      enforceSlideshowLayouts();
-      goToSlide(currentSlide);
-    } else if (!shouldBeActive && isActive) {
-      document.body.classList.remove('slideshow-active');
-      destroyDotsNav();
-      enforceSlideshowLayouts();
-      if (slideshowWrapper) {
-        slideshowWrapper.style.transform = 'none';
-      }
-      document.querySelectorAll('.reveal').forEach(el => el.classList.add('in-view'));
+    document.body.classList.remove('slideshow-active');
+    destroyDotsNav();
+    enforceSlideshowLayouts();
+    if (slideshowWrapper) {
+      slideshowWrapper.style.transform = 'none';
     }
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in-view'));
+    updateScrollProgress();
   }
-
-  // Event Listeners for scrolling
-  window.addEventListener('wheel', (e) => {
-    if (!document.body.classList.contains('slideshow-active') || isAnimating) return;
-
-    e.preventDefault();
-
-    if (e.deltaY > 30) {
-      goToSlide(currentSlide + 1);
-    } else if (e.deltaY < -30) {
-      goToSlide(currentSlide - 1);
-    }
-  }, { passive: false });
-
-  // Keyboard controls
-  window.addEventListener('keydown', (e) => {
-    if (!document.body.classList.contains('slideshow-active') || isAnimating) return;
-
-    if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-      goToSlide(currentSlide + 1);
-    } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-      goToSlide(currentSlide - 1);
-    }
-  });
-
-  // Touch controls (Swipe gestures)
-  let touchStartY = 0;
-  window.addEventListener('touchstart', (e) => {
-    if (!document.body.classList.contains('slideshow-active')) return;
-    touchStartY = e.touches[0].clientY;
-  }, { passive: true });
-
-  window.addEventListener('touchend', (e) => {
-    if (!document.body.classList.contains('slideshow-active') || isAnimating) return;
-    const touchEndY = e.changedTouches[0].clientY;
-    const diffY = touchStartY - touchEndY;
-
-    if (Math.abs(diffY) > 60) {
-      if (diffY > 0) {
-        goToSlide(currentSlide + 1);
-      } else {
-        goToSlide(currentSlide - 1);
-      }
-    }
-  }, { passive: true });
-
-  // Hijack anchor link clicks for slideshow
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      if (!document.body.classList.contains('slideshow-active')) return;
-      const targetId = this.getAttribute('href');
-      if (targetId === '#') return;
-
-      const targetElement = document.querySelector(targetId);
-      if (targetElement) {
-        const slide = targetElement.closest('.scroll-slide');
-        if (slide) {
-          e.preventDefault();
-          const slidesArray = Array.from(slides);
-          const slideIndex = slidesArray.indexOf(slide);
-          if (slideIndex !== -1) {
-            goToSlide(slideIndex);
-          }
-        }
-      }
-    });
-  });
 
   window.addEventListener('resize', checkSlideshowActive);
   window.addEventListener('load', checkSlideshowActive);
