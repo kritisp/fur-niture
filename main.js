@@ -1042,3 +1042,42 @@ megaLinks.forEach(link => {
   });
 
 });
+
+// --- Product card image scroller dot indicator updates on scroll ---
+document.querySelectorAll('.product-image-scroller').forEach(scroller => {
+  const dots = scroller.parentElement.querySelectorAll('.scroller-dot');
+  scroller.addEventListener('scroll', () => {
+    const scrollLeft = scroller.scrollLeft;
+    const width = scroller.clientWidth;
+    const activeIndex = Math.round(scrollLeft / width);
+    dots.forEach((dot, index) => {
+      if (index === activeIndex) {
+        dot.classList.add('active');
+      } else {
+        dot.classList.remove('active');
+      }
+    });
+  });
+});
+
+// --- Arrow navigation for product card image scrollers ---
+document.querySelectorAll('.product-image-container, .product-card-image-wrapper').forEach(container => {
+  const scroller = container.querySelector('.product-image-scroller');
+  if (!scroller) return;
+  
+  const prevBtn = container.querySelector('.scroller-arrow-prev');
+  const nextBtn = container.querySelector('.scroller-arrow-next');
+  
+  if (prevBtn && nextBtn) {
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevent triggering card clicks
+      const width = scroller.clientWidth;
+      scroller.scrollBy({ left: -width, behavior: 'smooth' });
+    });
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevent triggering card clicks
+      const width = scroller.clientWidth;
+      scroller.scrollBy({ left: width, behavior: 'smooth' });
+    });
+  }
+});
