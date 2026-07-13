@@ -985,62 +985,38 @@ document.addEventListener('DOMContentLoaded', () => {
 ===================== */
 
 const megaLinks = document.querySelectorAll('.mega-column a');
-
-const previewImage =
-  document.getElementById('megaPreviewImage');
-
-const previewTitle =
-  document.getElementById('megaPreviewTitle');
-
-const previewText =
-  document.getElementById('megaPreviewText');
+const previewImage = document.getElementById('megaPreviewImage');
 
 const previewData = {
-
-  "Executive Chairs": {
-    img: "https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1",
-    text: "Premium executive seating solutions."
-  },
-
-  "Conference Chairs": {
-    img: "https://images.unsplash.com/photo-1497366811353-6870744d04b2",
-    text: "Comfortable meeting room seating."
-  },
-
-  "Task Chairs": {
-    img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36",
-    text: "Ergonomic chairs for daily work."
-  },
-
-  "Lounge Chairs": {
-    img: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c",
-    text: "Relaxed seating for collaborative spaces."
-  },
-
-  "Sofas": {
-    img: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc",
-    text: "Stylish sofas for modern interiors."
-  }
+  "Executive Chairs": "products/Seating/Executive chairs/Baleno/62282.jpeg",
+  "Conference Chairs": "products/Seating/Conference chairs/Conference 1/2dfa1798-478c-4dc3-affd-367b8b39cffc.jpeg",
+  "Task Chairs": "products/Seating/Task chairs/802 abs/62335_Original.jpeg",
+  "Lounge Chairs": "products/Seating/Lounge chairs/Lounge 1/1BDE8421-06F0-496C-8E5F-DE8E1B0A5DEF.png",
+  "Sofas": "products/Seating/Sofas/Sofa 1/IMG_3638.jpeg",
+  "Iron Frame Workstations": "products/Workstations/Iron frame workstations/Aviator/054699fd-c69c-41cf-8d2a-95256d7dfcf0 2.jpeg",
+  "Wooden Workstations": "products/Workstations/Wooden workstations/Oslo/IMG_3741.png",
+  "Classroom Furniture": "products/Education/Classroom furniture/6189oJEcs1L._AC_AIweblab1006854,T4_FMavif_SF1050,1050_PQ64_.jpg",
+  "Hostel Furniture": "products/Education/Hostel furniture/Hostel beds/22EC9130-D98B-4278-80C7-4FA4B7C57AD0.png",
+  "Institutional Seating": "products/Education/Institutional seating/62357.jpeg",
+  "Institutional Storage": "products/Education/Institutional storage/IMG_3008.png",
+  "Staff Tables": "products/Education/Staff tables/IMG_3916.jpeg",
+  "Cafe Tables": "products/Woodwork/Cafe tables/Cafe 1/0EE04ED1-0565-4D34-89CC-57544EA535EC.png",
+  "Conference Tables": "products/Woodwork/Conference tables/Elite conference/IMG_4076.jpeg",
+  "Executive Tables": "products/Woodwork/Executive tables/Enrich executive/IMG_3699.png",
+  "Presidential Tables": "products/Woodwork/Presidential tables/Elite presidential table/IMG_3689.png",
+  "Reception Tables": "products/Woodwork/Reception tables/Harmony/IMG_3656.png",
+  "Almirah & Lockers": "products/Archiving/Almirah and lockers/51OGYdci2QL._AC_UF1000,1000_QL80_.jpeg",
+  "Office Storage": "products/Archiving/Office Storage/Pedestal/IMG_3008.png",
+  "Racks": "products/Archiving/Racks/46fc5215-9b94-45ef-92f4-8d251aacd804.jpeg"
 };
 
 megaLinks.forEach(link => {
-
   link.addEventListener('mouseenter', () => {
-
     const item = link.textContent.trim();
-
-    if (!previewData[item]) return;
-
-    previewImage.src =
-      previewData[item].img;
-
-    previewTitle.textContent =
-      item;
-
-    previewText.textContent =
-      previewData[item].text;
+    if (previewImage && previewData[item]) {
+      previewImage.src = previewData[item];
+    }
   });
-
 });
 
 // --- Product card image scroller dot indicator updates on scroll ---

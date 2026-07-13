@@ -1738,8 +1738,7 @@ header.fixed-header.inner-header {
   box-shadow: 0 15px 50px rgba(0, 0, 0, .08);
 
   display: grid;
-  grid-template-columns:
-    1.1fr 1.3fr 0.9fr 1.2fr 1.4fr;
+  grid-template-columns: repeat(5, 1fr) 250px;
 
   gap: 30px;
 
@@ -1792,7 +1791,7 @@ header.fixed-header.inner-header {
 
 .mega-preview img {
   width: 100%;
-  height: 220px;
+  height: 280px;
   object-fit: cover;
   border-radius: 12px;
   margin-bottom: 15px;
