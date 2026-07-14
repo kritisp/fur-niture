@@ -492,27 +492,66 @@
     </div>
   </section>
 
-  <!-- Footer (Same as other pages) -->
-  <footer class="footer">
-    <div class="container footer-container">
-      <div class="footer-grid">
-        <div class="footer-info">
-          <h3>Sheetal Furnitures</h3>
-          <p>We combine design, craftsmanship, and technology to build modern, ergonomic workspace furniture solutions.</p>
+  <!-- Footer Section -->
+  <footer id="contact" class="footer scroll-slide">
+    <div class="container relative z-10">
+
+      <!-- Top Section -->
+      <div class="footer-top">
+
+        <!-- Newsletter Signup -->
+        <div class="footer-newsletter">
+          <h3 class="newsletter-title">Sign up for our newsletter</h3>
+          <form class="newsletter-form" id="newsletter-form">
+            <input type="email" placeholder="Email" class="newsletter-input" required id="newsletter-email">
+            <button class="newsletter-submit" aria-label="Submit Email">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </form>
         </div>
-        <div class="footer-links">
-          <h4>Navigate</h4>
-          <a href="index.html">Home</a>
-          <a href="index.html#about">About</a>
-          <a href="projects.html">Projects</a>
-          <a href="index.html#contact">Contact</a>
+
+        <!-- Links Grid -->
+        <div class="footer-links-grid">
+          <div class="footer-links-col">
+            <a href="index.html#about" class="footer-link">About</a>
+            <a href="#" class="footer-link">Catalogue</a>
+            <a href="#" class="footer-link">FAQ's</a>
+          </div>
+          <div class="footer-links-col">
+            <a href="#" class="footer-link">Careers</a>
+            <a href="#" class="footer-link">Clients</a>
+            <a href="index.html#contact" class="footer-link">Contact</a>
+          </div>
+          <div class="footer-links-col">
+            <a href="#" class="footer-link">Instagram</a>
+            <a href="#" class="footer-link">Facebook</a>
+            <a href="#" class="footer-link">LinkedIn</a>
+          </div>
         </div>
-        <div class="footer-contact">
-          <h4>Get in Touch</h4>
-          <p><i class="fa-solid fa-envelope"></i> info@sheetalfurnitures.com</p>
-          <p><i class="fa-solid fa-phone"></i> +91 98765 43210</p>
+
+      </div>
+
+      <!-- Middle Metadata -->
+      <div class="footer-middle">
+        <div class="footer-meta-left">
+          <span>Established in 1992</span>
+          <span>&copy; Copyright <span id="footer-year">2026</span></span>
+        </div>
+        <div class="footer-meta-right">
+          <a href="#" class="footer-meta-link">Terms & Conditions</a>
+          <a href="#" class="footer-meta-link">Privacy Policy</a>
         </div>
       </div>
+
+      <!-- Massive Logo Text -->
+      <div class="reveal reveal-up footer-massive-text" style="transition-duration: 1500ms;">
+        <h1 class="massive-logo-heading">Sheetal Furnitures</h1>
+      </div>
+
     </div>
   </footer>
 
