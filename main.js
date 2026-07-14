@@ -44,9 +44,157 @@ document.addEventListener('DOMContentLoaded', () => {
   if (mobileOverlay) mobileOverlay.addEventListener('click', closeMobileMenu);
 
   // Close menu on clicking mobile nav link
+  function setupMobileAccordion() {
+    const mobileNavLinks = document.querySelector('.mobile-nav-links');
+    if (mobileNavLinks) {
+      const productsLink = Array.from(mobileNavLinks.querySelectorAll('a')).find(
+        a => a.textContent.trim().toLowerCase() === 'products'
+      );
+
+      if (productsLink) {
+        const accordionDiv = document.createElement('div');
+        accordionDiv.className = 'mobile-nav-dropdown-container';
+        accordionDiv.innerHTML = `
+          <button class="mobile-nav-item mobile-dropdown-btn" type="button">
+            <span>Products</span>
+            <svg class="chevron-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="mobile-dropdown-content">
+            <!-- SEATING -->
+            <div class="mobile-subdropdown">
+              <button class="mobile-subdropdown-btn" type="button">
+                <span>Seating</span>
+                <svg class="chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div class="mobile-subdropdown-content">
+                <a href="executive-chairs.html" class="mobile-sub-link">Executive Chairs</a>
+                <a href="conference-chairs.html" class="mobile-sub-link">Conference Chairs</a>
+                <a href="task-chairs.html" class="mobile-sub-link">Task Chairs</a>
+                <a href="lounge-chairs.html" class="mobile-sub-link">Lounge Chairs</a>
+                <a href="sofas.html" class="mobile-sub-link">Sofas</a>
+              </div>
+            </div>
+            <!-- WORKSTATIONS -->
+            <div class="mobile-subdropdown">
+              <button class="mobile-subdropdown-btn" type="button">
+                <span>Workstations</span>
+                <svg class="chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div class="mobile-subdropdown-content">
+                <a href="iron-frame-workstations.html" class="mobile-sub-link">Iron Workstations</a>
+                <a href="wooden-workstations.html" class="mobile-sub-link">Wooden Workstations</a>
+              </div>
+            </div>
+            <!-- EDUCATION -->
+            <div class="mobile-subdropdown">
+              <button class="mobile-subdropdown-btn" type="button">
+                <span>Education</span>
+                <svg class="chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div class="mobile-subdropdown-content">
+                <a href="classroom-furniture.html" class="mobile-sub-link">Classroom Furniture</a>
+                <a href="hostel-furniture.html" class="mobile-sub-link">Hostel Furniture</a>
+                <a href="institutional-seating.html" class="mobile-sub-link">Institutional Seating</a>
+                <a href="institutional-storage.html" class="mobile-sub-link">Institutional Storage</a>
+                <a href="staff-tables.html" class="mobile-sub-link">Staff Tables</a>
+              </div>
+            </div>
+            <!-- WOODWORK -->
+            <div class="mobile-subdropdown">
+              <button class="mobile-subdropdown-btn" type="button">
+                <span>Woodwork</span>
+                <svg class="chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div class="mobile-subdropdown-content">
+                <a href="cafe-tables.html" class="mobile-sub-link">Cafe Tables</a>
+                <a href="conference-tables.html" class="mobile-sub-link">Conference Tables</a>
+                <a href="executive-tables.html" class="mobile-sub-link">Executive Tables</a>
+                <a href="presidential-tables.html" class="mobile-sub-link">Presidential Tables</a>
+                <a href="reception-tables.html" class="mobile-sub-link">Reception Tables</a>
+              </div>
+            </div>
+            <!-- ARCHIVING -->
+            <div class="mobile-subdropdown">
+              <button class="mobile-subdropdown-btn" type="button">
+                <span>Archiving</span>
+                <svg class="chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div class="mobile-subdropdown-content">
+                <a href="almirah-lockers.html" class="mobile-sub-link">Almirah & Lockers</a>
+                <a href="office-storage.html" class="mobile-sub-link">Office Storage</a>
+                <a href="racks.html" class="mobile-sub-link">Racks</a>
+              </div>
+            </div>
+          </div>
+        `;
+
+        productsLink.parentNode.replaceChild(accordionDiv, productsLink);
+
+        const mainBtn = accordionDiv.querySelector('.mobile-dropdown-btn');
+        const mainContent = accordionDiv.querySelector('.mobile-dropdown-content');
+
+        mainBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isOpen = mainContent.classList.contains('open');
+          if (isOpen) {
+            mainContent.classList.remove('open');
+            mainBtn.classList.remove('open');
+          } else {
+            mainContent.classList.add('open');
+            mainBtn.classList.add('open');
+          }
+        });
+
+        const subBtns = accordionDiv.querySelectorAll('.mobile-subdropdown-btn');
+        subBtns.forEach(subBtn => {
+          subBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const subContent = subBtn.nextElementSibling;
+            const isSubOpen = subContent.classList.contains('open');
+            if (isSubOpen) {
+              subContent.classList.remove('open');
+              subBtn.classList.remove('open');
+            } else {
+              accordionDiv.querySelectorAll('.mobile-subdropdown-content.open').forEach(openSub => {
+                openSub.classList.remove('open');
+                openSub.previousElementSibling.classList.remove('open');
+              });
+              subContent.classList.add('open');
+              subBtn.classList.add('open');
+            }
+          });
+        });
+
+        const subLinks = accordionDiv.querySelectorAll('.mobile-sub-link');
+        subLinks.forEach(subLink => {
+          subLink.addEventListener('click', () => {
+            closeMobileMenu();
+          });
+        });
+      }
+    }
+  }
+
+  // Set up the accordion and click events
+  setupMobileAccordion();
+
   const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
   mobileNavItems.forEach(item => {
-    item.addEventListener('click', closeMobileMenu);
+    if (!item.classList.contains('mobile-dropdown-btn')) {
+      item.addEventListener('click', closeMobileMenu);
+    }
   });
 
   // --- 3. Scroll Reveal System ---
@@ -313,6 +461,14 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           categoryOverlayChair.classList.remove('active');
         }
+      }
+    });
+
+    // Add click event redirecting to actual product pages
+    item.addEventListener('click', () => {
+      const url = item.getAttribute('data-url');
+      if (url) {
+        window.location.href = url;
       }
     });
   });
@@ -1040,10 +1196,10 @@ document.querySelectorAll('.product-image-scroller').forEach(scroller => {
 document.querySelectorAll('.product-image-container, .product-card-image-wrapper').forEach(container => {
   const scroller = container.querySelector('.product-image-scroller');
   if (!scroller) return;
-  
+
   const prevBtn = container.querySelector('.scroller-arrow-prev');
   const nextBtn = container.querySelector('.scroller-arrow-next');
-  
+
   if (prevBtn && nextBtn) {
     prevBtn.addEventListener('click', (e) => {
       e.stopPropagation(); // Prevent triggering card clicks
