@@ -1149,7 +1149,7 @@ const previewData = {
   "Executive Chairs": "products/Seating/Executive chairs/Baleno/62282.jpeg",
   "Conference Chairs": "products/Seating/Conference chairs/Conference 1/2dfa1798-478c-4dc3-affd-367b8b39cffc.jpeg",
   "Task Chairs": "products/Seating/Task chairs/802 abs/62335_Original.jpeg",
-  "Lounge Chairs": "products/Seating/Lounge chairs/Lounge 1/1BDE8421-06F0-496C-8E5F-DE8E1B0A5DEF.png",
+  "Lounge Chairs": "products/Seating/Lounge Chairs/Lounge 1/1BDE8421-06F0-496C-8E5F-DE8E1B0A5DEF.png",
   "Sofas": "products/Seating/Sofas/Sofa 1/IMG_3638.jpeg",
   "Iron Frame Workstations": "products/Workstations/Iron frame workstations/Aviator/054699fd-c69c-41cf-8d2a-95256d7dfcf0 2.jpeg",
   "Wooden Workstations": "products/Workstations/Wooden workstations/Oslo/IMG_3741.png",
