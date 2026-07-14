@@ -2663,8 +2663,8 @@ body.slideshow-active .about-section .container {
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 4rem 2rem;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 4rem 3rem;
   padding: 40px 0 80px;
   width: 100%;
 }
@@ -2672,12 +2672,37 @@ body.slideshow-active .about-section .container {
 .product-card {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  height: 100%;
+  grid-column: span 6;
 }
 
 .empty-card {
-  visibility: hidden;
-  pointer-events: none;
+  display: none !important;
+}
+
+/* Amardeep-inspired masonry grid:
+   Every 5th card in a cycle of 6 (5, 11, 17...) spans 8 columns and 2 rows tall */
+.product-grid > .product-card:nth-child(6n + 5) {
+  grid-column: span 8;
+  grid-row: span 2;
+}
+
+/* The card immediately following the large card spans 4 columns to fit next to it */
+.product-grid > .product-card:nth-child(6n + 6) {
+  grid-column: span 4;
+}
+
+.product-grid > .product-card:nth-child(6n + 5) .product-image-container {
+  aspect-ratio: auto;
+  flex-grow: 1;
+  min-height: 480px;
+}
+
+.product-grid > .product-card:nth-child(6n + 5) .product-image-scroller,
+.product-grid > .product-card:nth-child(6n + 5) .product-image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
 
 @media (max-width: 1024px) {
@@ -2685,10 +2710,23 @@ body.slideshow-active .about-section .container {
     grid-template-columns: repeat(2, 1fr);
     gap: 3rem;
   }
-
-  .empty-card {
-    display: none;
-    /* Hide empty cards on tablet/mobile so they don't create blank slots */
+  
+  .product-card {
+    grid-column: span 1;
+  }
+  
+  .product-grid > .product-card:nth-child(6n + 5) {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  
+  .product-grid > .product-card:nth-child(6n + 6) {
+    grid-column: span 1;
+  }
+  
+  .product-grid > .product-card:nth-child(6n + 5) .product-image-container {
+    aspect-ratio: 1;
+    min-height: auto;
   }
 }
 
@@ -2696,6 +2734,19 @@ body.slideshow-active .about-section .container {
   .product-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+  
+  .product-card {
+    grid-column: span 1;
+  }
+  
+  .product-grid > .product-card:nth-child(6n + 5) {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  
+  .product-grid > .product-card:nth-child(6n + 6) {
+    grid-column: span 1;
   }
 }
 
@@ -2913,4 +2964,113 @@ body.slideshow-active .about-section .container {
   font-family: var(--font-primary);
   font-size: 0.875rem;
   color: #888;
+}
+
+/* Amardeep Design Inspired Grid System */
+.amardeep-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+  padding: 40px 0 80px;
+  width: 100%;
+}
+
+.amardeep-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 4%;
+}
+
+.amardeep-card-30 {
+  flex: 0 0 30%;
+  max-width: 30%;
+}
+
+.amardeep-card-60 {
+  flex: 0 0 66%;
+  max-width: 66%;
+}
+
+.amardeep-card-30 .product-image-container {
+  aspect-ratio: 1; /* square image container */
+  position: relative;
+  overflow: hidden;
+  background-color: #f7f7f7;
+}
+
+.amardeep-card-60 .product-image-container {
+  aspect-ratio: 1.333; /* default widescreen aspect ratio */
+  position: relative;
+  overflow: hidden;
+  background-color: #f7f7f7;
+}
+
+/* Specific aspect ratio for Malt barstool portrait lifestyle shot */
+.amardeep-card-60 .product-image-container.aspect-portrait-tall {
+  aspect-ratio: 0.75 !important;
+}
+
+.amardeep-row .product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.amardeep-row .product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+/* Product Tab List */
+.product-tab-list {
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 3rem;
+  width: 100%;
+}
+
+.product-tab-list .tabs {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.product-tab-list .tab-list {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.product-tab-list .tab-item {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font-family: var(--font-primary);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  padding: 1rem 0;
+  transition: all var(--transition-fast);
+}
+
+.product-tab-list .tab-item:hover,
+.product-tab-list .tab-item.active {
+  color: var(--color-navy);
+  border-bottom-color: var(--color-navy);
+  font-weight: 600;
+}
+
+/* Responsiveness */
+@media (max-width: 992px) {
+  .amardeep-row {
+    flex-direction: column;
+    gap: 4rem;
+  }
+  .amardeep-card-30,
+  .amardeep-card-60 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .amardeep-card-60 .product-image-container.aspect-portrait-tall {
+    aspect-ratio: 1 !important; /* switch to square or landscape on mobile */
+  }
 }
