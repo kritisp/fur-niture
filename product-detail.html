@@ -293,8 +293,9 @@
           </div>
 
           <!-- Preview Area -->
-          <div class="configurator-preview">
-            <img id="configurator-preview-img" src="" alt="Configured product image">
+          <div class="configurator-preview" style="position: relative; overflow: hidden; min-height: 400px; display: flex; align-items: center; justify-content: center;">
+            <div id="canvas-3d" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; cursor: grab; z-index: 2;"></div>
+            <img id="configurator-preview-img" src="" alt="Configured product image" style="display: none; max-width: 90%; max-height: 90%; object-fit: contain; z-index: 1; pointer-events: none;">
           </div>
 
           <!-- Color Swatch Panel -->
@@ -351,6 +352,246 @@
     let totalSlides = 0;
     let carouselScroller = null;
     let isTransitioning = false;
+
+    // --- Three.js 3D WebGL Configurator Scene ---
+    let scene, camera, renderer, controls;
+    let productMeshGroup = null;
+    let mainMaterial = null;
+    let secondMaterial = null;
+
+    function init3DConfigurator(categorySlug, productSlug, defaultColorHex) {
+      const container = document.getElementById('canvas-3d');
+      if (!container) return;
+
+      container.innerHTML = '';
+
+      const width = container.clientWidth || 450;
+      const height = container.clientHeight || 400;
+
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      container.appendChild(renderer.domElement);
+
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
+      camera.position.set(0, 1.8, 4.5);
+
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.minDistance = 2.5;
+      controls.maxDistance = 8;
+      controls.maxPolarAngle = Math.PI / 2 + 0.1;
+      controls.target.set(0, 0.4, 0);
+
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+      scene.add(ambientLight);
+
+      const spotLight = new THREE.SpotLight(0xffffff, 1.0);
+      spotLight.position.set(5, 8, 5);
+      spotLight.castShadow = true;
+      spotLight.shadow.mapSize.width = 512;
+      spotLight.shadow.mapSize.height = 512;
+      spotLight.shadow.bias = -0.001;
+      scene.add(spotLight);
+
+      const dirLight = new THREE.DirectionalLight(0xffffff, 0.35);
+      dirLight.position.set(-5, 5, -5);
+      scene.add(dirLight);
+
+      mainMaterial = new THREE.MeshStandardMaterial({
+        color: new THREE.Color(defaultColorHex),
+        roughness: 0.65,
+        metalness: 0.15,
+      });
+
+      secondMaterial = new THREE.MeshStandardMaterial({
+        color: new THREE.Color('#333333'),
+        roughness: 0.25,
+        metalness: 0.85,
+      });
+
+      productMeshGroup = new THREE.Group();
+      scene.add(productMeshGroup);
+
+      // Build 3D mesh based on category name
+      if (categorySlug.includes('sofa')) {
+        build3DSofa(productMeshGroup);
+      } else if (categorySlug.includes('chair') || categorySlug.includes('seating')) {
+        build3DChair(productMeshGroup);
+      } else if (categorySlug.includes('table') || categorySlug.includes('workstation')) {
+        build3DTable(productMeshGroup);
+      } else {
+        build3DCabinet(productMeshGroup);
+      }
+    }
+
+    function build3DSofa(group) {
+      // Seat Cushion
+      const seat = new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.18, 1.0), mainMaterial);
+      seat.position.set(0, 0.35, 0);
+      seat.castShadow = true;
+      seat.receiveShadow = true;
+      group.add(seat);
+
+      // Backrest
+      const back = new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.8, 0.18), mainMaterial);
+      back.position.set(0, 0.74, -0.4);
+      back.castShadow = true;
+      back.receiveShadow = true;
+      group.add(back);
+
+      // Left Armrest
+      const leftArm = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.5, 1.0), mainMaterial);
+      leftArm.position.set(-1.0, 0.5, 0);
+      leftArm.castShadow = true;
+      group.add(leftArm);
+
+      // Right Armrest
+      const rightArm = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.5, 1.0), mainMaterial);
+      rightArm.position.set(1.0, 0.5, 0);
+      rightArm.castShadow = true;
+      group.add(rightArm);
+
+      // 4 Legs
+      const legGeo = new THREE.CylinderGeometry(0.04, 0.04, 0.26, 16);
+      const legPositions = [
+        [-0.95, 0.13, 0.4],
+        [0.95, 0.13, 0.4],
+        [-0.95, 0.13, -0.4],
+        [0.95, 0.13, -0.4]
+      ];
+      legPositions.forEach(pos => {
+        const leg = new THREE.Mesh(legGeo, secondMaterial);
+        leg.position.set(pos[0], pos[1], pos[2]);
+        leg.castShadow = true;
+        group.add(leg);
+      });
+
+      const floorGeo = new THREE.PlaneGeometry(10, 10);
+      const floorMat = new THREE.ShadowMaterial({ opacity: 0.12 });
+      const floor = new THREE.Mesh(floorGeo, floorMat);
+      floor.rotation.x = -Math.PI / 2;
+      floor.position.y = -0.4;
+      floor.receiveShadow = true;
+      scene.add(floor);
+
+      window.addEventListener('resize', onWindowResize);
+
+      function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+      }
+      animate();
+    }
+
+    function build3DChair(group) {
+      // Seat
+      const seat = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.16, 1.2), mainMaterial);
+      seat.position.set(0, 0.4, 0);
+      seat.castShadow = true;
+      seat.receiveShadow = true;
+      group.add(seat);
+
+      // Backrest
+      const back = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.0, 0.16), mainMaterial);
+      back.position.set(0, 0.9, -0.5);
+      back.castShadow = true;
+      back.receiveShadow = true;
+      group.add(back);
+
+      // Central stem
+      const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.4, 16), secondMaterial);
+      stem.position.set(0, 0.12, 0);
+      group.add(stem);
+
+      // 5 Base Legs
+      const legGeo = new THREE.BoxGeometry(0.5, 0.05, 0.06);
+      for (let i = 0; i < 5; i++) {
+        const angle = (i * 2 * Math.PI) / 5;
+        const leg = new THREE.Mesh(legGeo, secondMaterial);
+        leg.position.set(Math.cos(angle) * 0.25, -0.08, Math.sin(angle) * 0.25);
+        leg.rotation.y = -angle;
+        leg.castShadow = true;
+        group.add(leg);
+        
+        // Wheels
+        const wheel = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.05, 12), secondMaterial);
+        wheel.rotation.z = Math.PI / 2;
+        wheel.position.set(Math.cos(angle) * 0.5, -0.14, Math.sin(angle) * 0.5);
+        wheel.castShadow = true;
+        group.add(wheel);
+      }
+
+      // Armrests
+      const armGeo = new THREE.BoxGeometry(0.08, 0.4, 0.7);
+      const leftArm = new THREE.Mesh(armGeo, secondMaterial);
+      leftArm.position.set(-0.64, 0.6, 0.08);
+      leftArm.castShadow = true;
+      group.add(leftArm);
+
+      const rightArm = new THREE.Mesh(armGeo, secondMaterial);
+      rightArm.position.set(0.64, 0.6, 0.08);
+      rightArm.castShadow = true;
+      group.add(rightArm);
+    }
+
+    function build3DTable(group) {
+      // Tabletop
+      const top = new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.06, 1.2), mainMaterial);
+      top.position.set(0, 0.5, 0);
+      top.castShadow = true;
+      top.receiveShadow = true;
+      group.add(top);
+
+      // 4 Legs
+      const legGeo = new THREE.CylinderGeometry(0.05, 0.03, 0.9, 16);
+      const legPositions = [
+        [-0.9, 0.02, 0.5],
+        [0.9, 0.02, 0.5],
+        [-0.9, 0.02, -0.5],
+        [0.9, 0.02, -0.5]
+      ];
+      legPositions.forEach(pos => {
+        const leg = new THREE.Mesh(legGeo, secondMaterial);
+        leg.position.set(pos[0], pos[1], pos[2]);
+        leg.castShadow = true;
+        group.add(leg);
+      });
+    }
+
+    function build3DCabinet(group) {
+      // Main Cabinet Body
+      const body = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.4, 0.6), mainMaterial);
+      body.position.set(0, 0.3, 0);
+      body.castShadow = true;
+      body.receiveShadow = true;
+      group.add(body);
+
+      // Handles
+      const handleGeo = new THREE.BoxGeometry(0.03, 0.25, 0.03);
+      const leftHandle = new THREE.Mesh(handleGeo, secondMaterial);
+      leftHandle.position.set(-0.08, 0.3, 0.31);
+      group.add(leftHandle);
+
+      const rightHandle = new THREE.Mesh(handleGeo, secondMaterial);
+      rightHandle.position.set(0.08, 0.3, 0.31);
+      group.add(rightHandle);
+    }
+
+    function onWindowResize() {
+      const container = document.getElementById('canvas-3d');
+      if (!container || !renderer || !camera) return;
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    }
 
     // Load active product dynamically on load
     window.addEventListener('DOMContentLoaded', () => {
@@ -430,12 +671,14 @@
           <button class="swatch-btn ${activeClass}" 
                   style="background-color: ${fin.color};" 
                   aria-label="${fin.name}" 
-                  onclick="selectFinish(this, '${fin.name}', '${fin.image}')">
+                  onclick="selectFinish(this, '${fin.name}', '${fin.image}', '${fin.color}')">
           </button>
         `;
       });
       if (product.finishes.length > 0) {
         document.getElementById('active-finish-name').innerText = product.finishes[0].name;
+        // Initialize 3D model rendering
+        init3DConfigurator(cat, prod, product.finishes[0].color);
       }
 
       // Populate Related Products
@@ -543,13 +786,18 @@
     }
 
     // Configurator swatch selection
-    function selectFinish(btn, finishName, imageSrc) {
+    function selectFinish(btn, finishName, imageSrc, colorHex) {
       // Update swatch active classes
       document.querySelectorAll('.swatch-btn').forEach(s => s.classList.remove('active'));
       btn.classList.add('active');
 
       // Update finish name indicator
       document.getElementById('active-finish-name').innerText = finishName;
+
+      // Update 3D Model primary material color
+      if (mainMaterial) {
+        mainMaterial.color.set(colorHex);
+      }
 
       // Update preview image with fade effect
       const previewImg = document.getElementById('configurator-preview-img');
