@@ -453,15 +453,6 @@ document.addEventListener('DOMContentLoaded', () => {
           img.classList.remove('active');
         }
       });
-
-      // Special overlay logic for Lounge Chairs (index 2)
-      if (categoryOverlayChair) {
-        if (activeIndex === 2) {
-          categoryOverlayChair.classList.add('active');
-        } else {
-          categoryOverlayChair.classList.remove('active');
-        }
-      }
     });
 
     // Add click event redirecting to actual product pages
