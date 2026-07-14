@@ -842,8 +842,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const cards = document.querySelectorAll('.hero-scroller-card');
 
   const slideData = [
-    { image: 'images/Office.webp', title: 'Office' },
-    { image: 'images/Corporates.webp', title: 'Corporates' },
     { image: 'images/Cafe.webp', title: 'Cafe' },
     { image: 'images/Bars.webp', title: 'Bars' },
     { image: 'images/Phone booths.webp', title: 'Phone booths' },
