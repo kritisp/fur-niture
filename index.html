@@ -346,23 +346,52 @@
       <!-- About Section -->
       <section id="about" class="about-section scroll-slide">
         <div class="container relative z-10">
-          <!-- About Details Block (Bottom, Centered) -->
-          <div class="reveal reveal-up flex-col items-center justify-center text-center about-details-block">
-            <span class="about-kicker">Since 1992</span>
-            <h2 class="about-heading">
-              About Sheetal <span class="text-serif-italic">Furnitures</span>
-            </h2>
-            <p class="about-text">
-              We blend design, function, materials,<br>
-              and colors to create <span class="highlight-text">harmonious living.</span>
-            </p>
-            <button class="btn-black-pill mt-4">
-              Discover More
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 0.5rem; display: inline-block; vertical-align: middle;">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </button>
+          <div class="about-grid-layout">
+            <!-- Left Side: Staggered Images and Play Video Card -->
+            <div class="about-images-column">
+              <div class="about-images-wrapper">
+                <div class="about-img-tall">
+                  <img src="images/hero_2.png" alt="Premium Desk Workspace" class="reveal reveal-right">
+                </div>
+                <div class="about-img-square">
+                  <img src="images/hero_3.png" alt="Collaborative Lounge Area" class="reveal reveal-left">
+                </div>
+                <!-- Play Video Card -->
+                <div class="about-video-card reveal reveal-up" style="transition-delay: 200ms;">
+                  <p class="video-card-text">Watch a video about how we craft and design premium furniture for our customers</p>
+                  <div class="video-card-action">
+                    <span class="play-label">Play video</span>
+                    <span class="play-timeline"></span>
+                    <button class="play-btn-circle" aria-label="Play video">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="6 3 20 12 6 21 6 3"></polygon>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Side: Content Block -->
+            <div class="about-content-column reveal reveal-left">
+              <div class="about-content-header">
+                <span class="about-decor-line"></span>
+                <h2 class="about-heading-modern">History of our creation</h2>
+              </div>
+              <p class="about-desc-text">
+                Since our humble beginnings in 1992, Sheetal Furnitures has significantly expanded its collection of premium corporate, modular, and institutional furniture. Today, we are proud to present you our best architectural and seating design solutions.
+              </p>
+              <p class="about-desc-text">
+                Our collections are designed with care to bring beauty, function, and harmony to modern workspaces. We blend design, materials, and colors to create harmonious spaces, and we are glad that you, our customers, support us on our way!
+              </p>
+              <a href="#spaces" class="read-more-link">
+                <span>Read more</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </section>
