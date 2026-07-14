@@ -743,6 +743,19 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
+      // Product Details Page Hover Custom Cursor
+      const productCard = target.closest('.product-card');
+      if (productCard) {
+        if (target.closest('.scroller-arrow') || target.closest('.scroller-dot')) {
+          customCursor.classList.add('hover');
+          customCursorDot.classList.add('hover');
+          return;
+        }
+        if (customCursorText) customCursorText.textContent = 'VIEW DETAIL';
+        customCursor.classList.add('image-hover', 'has-text');
+        return;
+      }
+
       // Slider/Carousel Viewports
       const offeringsSlider = target.closest('#offerings-viewport');
       if (offeringsSlider) {
@@ -1210,4 +1223,31 @@ document.querySelectorAll('.product-image-container, .product-card-image-wrapper
       scroller.scrollBy({ left: width, behavior: 'smooth' });
     });
   }
+});
+
+// --- Product card redirect to dynamic details page ---
+document.querySelectorAll('.product-card').forEach(card => {
+  card.addEventListener('click', (e) => {
+    // If user clicks on interactive elements (arrows, dots), do not redirect
+    if (e.target.closest('.scroller-arrow') || e.target.closest('.product-scroller-dots') || e.target.closest('.scroller-dot')) {
+      return;
+    }
+
+    const nameEl = card.querySelector('.product-name');
+    if (!nameEl) return;
+    const name = nameEl.innerText.trim();
+    
+    // Extract category slug from the filename
+    const filename = window.location.pathname.split('/').pop() || 'index.html';
+    let category = filename.replace('.html', '');
+    if (category === '' || category === 'index') {
+      category = 'sofas'; // default fallback for test index clicks
+    }
+    
+    // Slugify name
+    const productSlug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    
+    // Redirect
+    window.location.href = `product-detail.html?cat=${category}&prod=${productSlug}`;
+  });
 });
