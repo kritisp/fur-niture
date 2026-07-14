@@ -155,10 +155,34 @@
 
   <!-- Hero Section -->
   <main class="product-page-main">
-    <section class="product-page-hero">
-      <div class="container">
-        <h1 class="product-page-title">Conference Tables</h1>
-        <p class="text-muted text-lg max-w-2xl mx-auto">Discover our premium woodwork conference tables, custom-crafted for modern boardrooms, collaborative meetings, and presentations.</p>
+    <section class="product-page-hero" id="hero-carousel">
+      <div class="hero-carousel-track" id="hero-carousel-track">
+        <div class="hero-carousel-slide">
+          <img src="products/Woodwork/Conference tables/Elite conference/IMG_4076.jpeg" alt="Conference Tables" loading="eager">
+        </div>
+        <div class="hero-carousel-slide">
+          <img src="products/Woodwork/Conference tables/Forge/IMG_3724.png" alt="Conference Tables" loading="eager">
+        </div>
+        <div class="hero-carousel-slide">
+          <img src="products/Woodwork/Conference tables/Nexus/IMG_1954.jpeg" alt="Conference Tables" loading="eager">
+        </div>
+        <div class="hero-carousel-slide">
+          <img src="products/Woodwork/Conference tables/Pinnacle/IMG_3823.jpeg" alt="Conference Tables" loading="eager">
+        </div>
+        <div class="hero-carousel-slide">
+          <img src="products/Woodwork/Conference tables/Elite conference/IMG_4077.jpeg" alt="Conference Tables" loading="eager">
+        </div>
+      </div>
+      <div class="hero-carousel-overlay"></div>
+      <div class="hero-carousel-info">
+        <h1>Conference Tables<span class="hero-count">(4)</span></h1>
+      </div>
+      <div class="hero-carousel-dots" id="hero-carousel-dots">
+          <button class="hero-carousel-dot active" aria-label="Go to slide 1" onclick="goToHeroSlide(0)"></button>
+          <button class="hero-carousel-dot" aria-label="Go to slide 2" onclick="goToHeroSlide(1)"></button>
+          <button class="hero-carousel-dot" aria-label="Go to slide 3" onclick="goToHeroSlide(2)"></button>
+          <button class="hero-carousel-dot" aria-label="Go to slide 4" onclick="goToHeroSlide(3)"></button>
+          <button class="hero-carousel-dot" aria-label="Go to slide 5" onclick="goToHeroSlide(4)"></button>
       </div>
     </section>
 
@@ -401,6 +425,33 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
   <script src="main.js"></script>
+
+    <!-- Hero Carousel Script -->
+    <script>
+    (function() {
+      let heroSlideIndex = 0;
+      const heroTrack = document.getElementById('hero-carousel-track');
+      const heroDots = document.querySelectorAll('.hero-carousel-dot');
+      const heroTotalSlides = heroDots.length;
+
+      function goToHeroSlide(index) {
+        heroSlideIndex = index;
+        if (heroTrack) {
+          heroTrack.style.transform = 'translateX(-' + (heroSlideIndex * 100) + '%)';
+        }
+        heroDots.forEach(function(dot, i) {
+          dot.classList.toggle('active', i === heroSlideIndex);
+        });
+      }
+      window.goToHeroSlide = goToHeroSlide;
+
+      if (heroTotalSlides > 1) {
+        setInterval(function() {
+          goToHeroSlide((heroSlideIndex + 1) % heroTotalSlides);
+        }, 4000);
+      }
+    })();
+    </script>
 </body>
 
 </html>

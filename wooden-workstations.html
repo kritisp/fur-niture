@@ -155,10 +155,34 @@
 
   <!-- Hero Section -->
   <main class="product-page-main">
-    <section class="product-page-hero">
-      <div class="container">
-        <h1 class="product-page-title">Wooden Workstations</h1>
-        <p class="text-muted text-lg max-w-2xl mx-auto">Discover our premium wooden workstations, custom-crafted for warmth, elegant architecture, and seamless office organization.</p>
+    <section class="product-page-hero" id="hero-carousel">
+      <div class="hero-carousel-track" id="hero-carousel-track">
+        <div class="hero-carousel-slide">
+          <img src="products/Workstations/Wooden workstations/Oslo/IMG_3741.png" alt="Wooden Workstations" loading="eager">
+        </div>
+        <div class="hero-carousel-slide">
+          <img src="products/Workstations/Wooden workstations/Oslo private/IMG_3744.png" alt="Wooden Workstations" loading="eager">
+        </div>
+        <div class="hero-carousel-slide">
+          <img src="products/Workstations/Wooden workstations/Workstation 3/197A7CE0-159E-4F81-B901-03926E071FDD.png" alt="Wooden Workstations" loading="eager">
+        </div>
+        <div class="hero-carousel-slide">
+          <img src="products/Workstations/Wooden workstations/Oslo/IMG_3742.png" alt="Wooden Workstations" loading="eager">
+        </div>
+        <div class="hero-carousel-slide">
+          <img src="products/Workstations/Wooden workstations/Oslo/IMG_3743.png" alt="Wooden Workstations" loading="eager">
+        </div>
+      </div>
+      <div class="hero-carousel-overlay"></div>
+      <div class="hero-carousel-info">
+        <h1>Wooden Workstations<span class="hero-count">(3)</span></h1>
+      </div>
+      <div class="hero-carousel-dots" id="hero-carousel-dots">
+          <button class="hero-carousel-dot active" aria-label="Go to slide 1" onclick="goToHeroSlide(0)"></button>
+          <button class="hero-carousel-dot" aria-label="Go to slide 2" onclick="goToHeroSlide(1)"></button>
+          <button class="hero-carousel-dot" aria-label="Go to slide 3" onclick="goToHeroSlide(2)"></button>
+          <button class="hero-carousel-dot" aria-label="Go to slide 4" onclick="goToHeroSlide(3)"></button>
+          <button class="hero-carousel-dot" aria-label="Go to slide 5" onclick="goToHeroSlide(4)"></button>
       </div>
     </section>
 
@@ -356,6 +380,33 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
   <script src="main.js"></script>
+
+    <!-- Hero Carousel Script -->
+    <script>
+    (function() {
+      let heroSlideIndex = 0;
+      const heroTrack = document.getElementById('hero-carousel-track');
+      const heroDots = document.querySelectorAll('.hero-carousel-dot');
+      const heroTotalSlides = heroDots.length;
+
+      function goToHeroSlide(index) {
+        heroSlideIndex = index;
+        if (heroTrack) {
+          heroTrack.style.transform = 'translateX(-' + (heroSlideIndex * 100) + '%)';
+        }
+        heroDots.forEach(function(dot, i) {
+          dot.classList.toggle('active', i === heroSlideIndex);
+        });
+      }
+      window.goToHeroSlide = goToHeroSlide;
+
+      if (heroTotalSlides > 1) {
+        setInterval(function() {
+          goToHeroSlide((heroSlideIndex + 1) % heroTotalSlides);
+        }, 4000);
+      }
+    })();
+    </script>
 </body>
 
 </html>

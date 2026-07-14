@@ -155,10 +155,34 @@
 
   <!-- Hero Section -->
   <main class="product-page-main">
-    <section class="product-page-hero">
-      <div class="container">
-        <h1 class="product-page-title">Reception Tables</h1>
-        <p class="text-muted text-lg max-w-2xl mx-auto">Discover our premium reception woodwork tables, crafted to make an elite first impression on your clients and visitors.</p>
+    <section class="product-page-hero" id="hero-carousel">
+      <div class="hero-carousel-track" id="hero-carousel-track">
+        <div class="hero-carousel-slide">
+          <img src="products/Woodwork/Reception tables/Harmony/IMG_3656.png" alt="Reception Tables" loading="eager">
+        </div>
+        <div class="hero-carousel-slide">
+          <img src="products/Woodwork/Reception tables/Horizon/IMG_1958.jpeg" alt="Reception Tables" loading="eager">
+        </div>
+        <div class="hero-carousel-slide">
+          <img src="products/Woodwork/Reception tables/Luxor/IMG_0077.jpeg" alt="Reception Tables" loading="eager">
+        </div>
+        <div class="hero-carousel-slide">
+          <img src="products/Woodwork/Reception tables/Prestige/IMG_3685.png" alt="Reception Tables" loading="eager">
+        </div>
+        <div class="hero-carousel-slide">
+          <img src="products/Woodwork/Reception tables/Harmony/IMG_3657.png" alt="Reception Tables" loading="eager">
+        </div>
+      </div>
+      <div class="hero-carousel-overlay"></div>
+      <div class="hero-carousel-info">
+        <h1>Reception Tables<span class="hero-count">(4)</span></h1>
+      </div>
+      <div class="hero-carousel-dots" id="hero-carousel-dots">
+          <button class="hero-carousel-dot active" aria-label="Go to slide 1" onclick="goToHeroSlide(0)"></button>
+          <button class="hero-carousel-dot" aria-label="Go to slide 2" onclick="goToHeroSlide(1)"></button>
+          <button class="hero-carousel-dot" aria-label="Go to slide 3" onclick="goToHeroSlide(2)"></button>
+          <button class="hero-carousel-dot" aria-label="Go to slide 4" onclick="goToHeroSlide(3)"></button>
+          <button class="hero-carousel-dot" aria-label="Go to slide 5" onclick="goToHeroSlide(4)"></button>
       </div>
     </section>
 
@@ -391,6 +415,33 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
   <script src="main.js"></script>
+
+    <!-- Hero Carousel Script -->
+    <script>
+    (function() {
+      let heroSlideIndex = 0;
+      const heroTrack = document.getElementById('hero-carousel-track');
+      const heroDots = document.querySelectorAll('.hero-carousel-dot');
+      const heroTotalSlides = heroDots.length;
+
+      function goToHeroSlide(index) {
+        heroSlideIndex = index;
+        if (heroTrack) {
+          heroTrack.style.transform = 'translateX(-' + (heroSlideIndex * 100) + '%)';
+        }
+        heroDots.forEach(function(dot, i) {
+          dot.classList.toggle('active', i === heroSlideIndex);
+        });
+      }
+      window.goToHeroSlide = goToHeroSlide;
+
+      if (heroTotalSlides > 1) {
+        setInterval(function() {
+          goToHeroSlide((heroSlideIndex + 1) % heroTotalSlides);
+        }, 4000);
+      }
+    })();
+    </script>
 </body>
 
 </html>
