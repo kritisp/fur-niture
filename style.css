@@ -2681,25 +2681,32 @@ body.slideshow-active .about-section .container {
 }
 
 /* Amardeep-inspired masonry grid:
-   Every 5th card in a cycle of 6 (5, 11, 17...) spans 8 columns and 2 rows tall */
-.product-grid > .product-card:nth-child(6n + 5) {
+   Alternates the placement of the large card between Left and Right in a 12-item cycle */
+
+/* Large cards (Card 5: left-aligned, Card 12: right-aligned) */
+.product-grid > .product-card:nth-child(12n + 5),
+.product-grid > .product-card:nth-child(12n + 12) {
   grid-column: span 8;
   grid-row: span 2;
 }
 
-/* The card immediately following the large card spans 4 columns to fit next to it */
-.product-grid > .product-card:nth-child(6n + 6) {
+/* Small cards next to the large ones (Card 6 sits next to Card 5; Card 11 sits next to Card 12) */
+.product-grid > .product-card:nth-child(12n + 6),
+.product-grid > .product-card:nth-child(12n + 11) {
   grid-column: span 4;
 }
 
-.product-grid > .product-card:nth-child(6n + 5) .product-image-container {
+.product-grid > .product-card:nth-child(12n + 5) .product-image-container,
+.product-grid > .product-card:nth-child(12n + 12) .product-image-container {
   aspect-ratio: auto;
   flex-grow: 1;
   min-height: 480px;
 }
 
-.product-grid > .product-card:nth-child(6n + 5) .product-image-scroller,
-.product-grid > .product-card:nth-child(6n + 5) .product-image {
+.product-grid > .product-card:nth-child(12n + 5) .product-image-scroller,
+.product-grid > .product-card:nth-child(12n + 5) .product-image,
+.product-grid > .product-card:nth-child(12n + 12) .product-image-scroller,
+.product-grid > .product-card:nth-child(12n + 12) .product-image {
   height: 100%;
   width: 100%;
   object-fit: cover;
@@ -2715,16 +2722,19 @@ body.slideshow-active .about-section .container {
     grid-column: span 1;
   }
   
-  .product-grid > .product-card:nth-child(6n + 5) {
+  .product-grid > .product-card:nth-child(12n + 5),
+  .product-grid > .product-card:nth-child(12n + 12) {
     grid-column: span 1;
     grid-row: span 1;
   }
   
-  .product-grid > .product-card:nth-child(6n + 6) {
+  .product-grid > .product-card:nth-child(12n + 6),
+  .product-grid > .product-card:nth-child(12n + 11) {
     grid-column: span 1;
   }
   
-  .product-grid > .product-card:nth-child(6n + 5) .product-image-container {
+  .product-grid > .product-card:nth-child(12n + 5) .product-image-container,
+  .product-grid > .product-card:nth-child(12n + 12) .product-image-container {
     aspect-ratio: 1;
     min-height: auto;
   }
@@ -2740,12 +2750,14 @@ body.slideshow-active .about-section .container {
     grid-column: span 1;
   }
   
-  .product-grid > .product-card:nth-child(6n + 5) {
+  .product-grid > .product-card:nth-child(12n + 5),
+  .product-grid > .product-card:nth-child(12n + 12) {
     grid-column: span 1;
     grid-row: span 1;
   }
   
-  .product-grid > .product-card:nth-child(6n + 6) {
+  .product-grid > .product-card:nth-child(12n + 6),
+  .product-grid > .product-card:nth-child(12n + 11) {
     grid-column: span 1;
   }
 }
