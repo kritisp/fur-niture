@@ -2736,10 +2736,8 @@ body.slideshow-active .about-section .container {
   grid-row: span 2;
 }
 
-/* Image scaling for large cards and small cards inside mixed rows to cover their areas */
+/* Image scaling for large cards inside mixed rows to cover their areas */
 .product-grid > .product-card:nth-child(12n + 5) .product-image-container,
-.product-grid > .product-card:nth-child(12n + 6) .product-image-container,
-.product-grid > .product-card:nth-child(12n + 11) .product-image-container,
 .product-grid > .product-card:nth-child(12n + 12) .product-image-container {
   aspect-ratio: auto;
   flex-grow: 1;
@@ -2748,10 +2746,6 @@ body.slideshow-active .about-section .container {
 
 .product-grid > .product-card:nth-child(12n + 5) .product-image-scroller,
 .product-grid > .product-card:nth-child(12n + 5) .product-image,
-.product-grid > .product-card:nth-child(12n + 6) .product-image-scroller,
-.product-grid > .product-card:nth-child(12n + 6) .product-image,
-.product-grid > .product-card:nth-child(12n + 11) .product-image-scroller,
-.product-grid > .product-card:nth-child(12n + 11) .product-image,
 .product-grid > .product-card:nth-child(12n + 12) .product-image-scroller,
 .product-grid > .product-card:nth-child(12n + 12) .product-image {
   height: 100%;
