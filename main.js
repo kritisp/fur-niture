@@ -847,10 +847,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const slideData = [
     { image: 'images/sofas.png', title: 'Sofas' },
-    { image: 'images/seating.png', title: 'Task Chairs' },
-    { image: 'images/lounge_chairs.png', title: 'Lounge Chairs' },
+    { image: 'images/seating_hero.png', title: 'Task Chairs' },
+    { image: 'images/lounge_chairs_hero.png', title: 'Lounge Chairs' },
     { image: 'images/workstations.png', title: 'Workstations' },
-    { image: 'images/storage.png', title: 'Archiving' },
+    { image: 'images/storage_hero.png', title: 'Archiving' },
     { image: 'images/conference_tables.png', title: 'Conference Tables' },
     { image: 'images/tables.png', title: 'Executive Tables' }
   ];
