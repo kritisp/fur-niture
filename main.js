@@ -1241,4 +1241,13 @@ document.querySelectorAll('.product-card').forEach(card => {
     // Redirect
     window.location.href = `product-detail.html?cat=${category}&prod=${productSlug}`;
   });
+
+  // --- 10. Parallax scrolling for product page hero ---
+  const heroImage = document.querySelector('.hero-carousel-slide img');
+  if (heroImage) {
+    window.addEventListener('scroll', () => {
+      const scrollOffset = window.scrollY;
+      heroImage.style.transform = `translateY(${scrollOffset * 0.3}px)`;
+    });
+  }
 });

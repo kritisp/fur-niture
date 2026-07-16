@@ -2661,38 +2661,43 @@ body.slideshow-active .about-section .container {
 
 /* --- Product Pages --- */
 
-/* Hero Image Carousel (Premium Full-bleed Lifestyle Layout) */
+/* Hero Section (Premium Full-bleed Lifestyle Layout with Parallax Support) */
 .product-page-hero {
   position: relative;
   width: 100%;
-  height: 85vh; /* Premium tall height */
-  min-height: 500px;
-  max-height: 800px;
+  height: 60vh; /* Premium, balanced height for desktop screen flow */
+  min-height: 400px;
+  max-height: 650px;
   overflow: hidden;
   background-color: #111;
   margin-top: 60px;
 }
 
 .hero-carousel-track {
-  display: flex;
+  display: block;
   width: 100%;
   height: 100%;
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hero-carousel-slide {
-  flex: 0 0 100%;
   width: 100%;
   height: 100%;
   position: relative;
   overflow: hidden;
 }
 
+@keyframes heroZoom {
+  from { transform: scale(1.08); }
+  to { transform: scale(1); }
+}
+
 .hero-carousel-slide img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Cover the entire container for full-bleed look */
+  object-fit: cover; /* Cover container fully for no white margins */
   display: block;
+  transform-origin: center;
+  animation: heroZoom 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
 .hero-carousel-overlay {
@@ -2700,11 +2705,12 @@ body.slideshow-active .about-section .container {
   inset: 0;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.1) 60%, rgba(0, 0, 0, 0.3) 100%);
   pointer-events: none;
+  z-index: 2;
 }
 
 .hero-carousel-info {
   position: absolute;
-  bottom: 3rem;
+  bottom: 3.5rem;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
@@ -2715,7 +2721,7 @@ body.slideshow-active .about-section .container {
   font-family: var(--font-heading);
   font-size: clamp(3rem, 8vw, 6rem);
   font-weight: 700;
-  color: #fff; /* Legible white text on dark overlay */
+  color: #fff; /* White text for dark overlay readability */
   line-height: 1;
   letter-spacing: -0.02em;
 }
@@ -2729,50 +2735,21 @@ body.slideshow-active .about-section .container {
   vertical-align: super;
 }
 
+/* Hide pagination dots completely as there is only 1 image */
 .hero-carousel-dots {
-  position: absolute;
-  bottom: 1.5rem;
-  right: 2rem;
-  display: flex;
-  gap: 0.5rem;
-  z-index: 4;
-}
-
-.hero-carousel-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.6); /* White borders for dark theme */
-  background: transparent;
-  cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s;
-  padding: 0;
-}
-
-.hero-carousel-dot.active {
-  background-color: #fff; /* White active dot */
-  border-color: #fff;
-}
-
-.hero-carousel-dot:hover {
-  border-color: #fff;
+  display: none !important;
 }
 
 @media (max-width: 768px) {
   .product-page-hero {
-    height: 55vh;
-    min-height: 320px;
-    max-height: 500px;
+    height: 45vh;
+    min-height: 300px;
+    max-height: 450px;
     margin-top: 50px;
   }
 
   .hero-carousel-info {
     bottom: 2rem;
-  }
-
-  .hero-carousel-dots {
-    right: 1rem;
-    bottom: 1rem;
   }
 }
 
