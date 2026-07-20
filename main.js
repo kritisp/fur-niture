@@ -1146,31 +1146,31 @@ const megaLinks = document.querySelectorAll('.mega-column a');
 const previewImage = document.getElementById('megaPreviewImage');
 
 const previewData = {
-  "Executive Chairs": "products/Seating/Executive chairs/Baleno/62282.jpeg",
-  "Conference Chairs": "products/Seating/Conference chairs/Conference 1/2dfa1798-478c-4dc3-affd-367b8b39cffc.jpeg",
-  "Task Chairs": "products/Seating/Task chairs/802 abs/62335_Original.jpeg",
-  "Lounge Chairs": "products/Seating/Lounge Chairs/Lounge 1/1BDE8421-06F0-496C-8E5F-DE8E1B0A5DEF.png",
-  "Sofas": "products/Seating/Sofas/Sofa 1/IMG_3638.jpeg",
-  "Iron Frame Workstations": "products/Workstations/Iron frame workstations/Aviator/054699fd-c69c-41cf-8d2a-95256d7dfcf0 2.jpeg",
-  "Wooden Workstations": "products/Workstations/Wooden workstations/Oslo/IMG_3741.png",
-  "Classroom Furniture": "products/Education/Classroom furniture/6189oJEcs1L._AC_AIweblab1006854,T4_FMavif_SF1050,1050_PQ64_.jpg",
-  "Hostel Furniture": "products/Education/Hostel furniture/Hostel beds/22EC9130-D98B-4278-80C7-4FA4B7C57AD0.png",
-  "Institutional Seating": "products/Education/Institutional seating/62357.jpeg",
-  "Institutional Storage": "products/Education/Institutional storage/IMG_3008.png",
-  "Staff Tables": "products/Education/Staff tables/IMG_3916.jpeg",
-  "Cafe Tables": "products/Woodwork/Cafe tables/Cafe 1/0EE04ED1-0565-4D34-89CC-57544EA535EC.png",
-  "Conference Tables": "products/Woodwork/Conference tables/Elite conference/IMG_4076.jpeg",
-  "Executive Tables": "products/Woodwork/Executive tables/Enrich executive/IMG_3699.png",
-  "Presidential Tables": "products/Woodwork/Presidential tables/Elite presidential table/IMG_3689.png",
-  "Reception Tables": "products/Woodwork/Reception tables/Harmony/IMG_3656.png",
-  "Almirah & Lockers": "products/Archiving/Almirah and lockers/51OGYdci2QL._AC_UF1000,1000_QL80_.jpeg",
-  "Office Storage": "products/Archiving/Office Storage/Pedestal/IMG_3008.png",
-  "Racks": "products/Archiving/Racks/46fc5215-9b94-45ef-92f4-8d251aacd804.jpeg"
+  "executive chairs": "products/Seating/Executive Chairs/Baleno/62282.jpeg",
+  "conference chairs": "products/Seating/Conference Chairs/Conference 1/2dfa1798-478c-4dc3-affd-367b8b39cffc.jpeg",
+  "task chairs": "products/Seating/Task Chairs/802 abs/62335_Original.jpeg",
+  "lounge chairs": "products/Seating/Lounge Chairs/Lounge 1/1BDE8421-06F0-496C-8E5F-DE8E1B0A5DEF.png",
+  "sofas": "products/Seating/Sofas/Sofa 1/IMG_3638.jpeg",
+  "iron frame workstations": "products/Workstations/Iron frame workstations/Aviator/054699fd-c69c-41cf-8d2a-95256d7dfcf0 2.jpeg",
+  "wooden workstations": "products/Workstations/Wooden workstations/Oslo/IMG_3741.png",
+  "classroom furniture": "products/Education/Classroom furniture/6189oJEcs1L._AC_AIweblab1006854,T4_FMavif_SF1050,1050_PQ64_.jpg",
+  "hostel furniture": "products/Education/Hostel furniture/Hostel beds/22EC9130-D98B-4278-80C7-4FA4B7C57AD0.png",
+  "institutional seating": "products/Education/Institutional seating/62357.jpeg",
+  "institutional storage": "products/Education/Institutional storage/IMG_3008.png",
+  "staff tables": "products/Education/Staff tables/IMG_3916.jpeg",
+  "cafe tables": "products/Woodwork/Cafe tables/Cafe 1/0EE04ED1-0565-4D34-89CC-57544EA535EC.png",
+  "conference tables": "products/Woodwork/Conference tables/Elite conference/IMG_4076.jpeg",
+  "executive tables": "products/Woodwork/Executive tables/Enrich executive/IMG_3699.png",
+  "presidential tables": "products/Woodwork/Presidential tables/Elite presidential table/IMG_3689.png",
+  "reception tables": "products/Woodwork/Reception tables/Harmony/IMG_3656.png",
+  "almirah & lockers": "products/Archiving/Almirah and lockers/51OGYdci2QL._AC_UF1000,1000_QL80_.jpeg",
+  "office storage": "products/Archiving/Office Storage/Pedestal/IMG_3008.png",
+  "racks": "products/Archiving/Racks/46fc5215-9b94-45ef-92f4-8d251aacd804.jpeg"
 };
 
 megaLinks.forEach(link => {
   link.addEventListener('mouseenter', () => {
-    const item = link.textContent.trim();
+    const item = link.textContent.trim().toLowerCase();
     if (previewImage && previewData[item]) {
       previewImage.src = previewData[item];
     }
