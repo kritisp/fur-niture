@@ -2674,16 +2674,25 @@ body.slideshow-active .about-section .container {
 }
 
 .hero-carousel-track {
-  display: block;
+  display: flex;
   width: 100%;
   height: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.hero-carousel-track::-webkit-scrollbar {
+  display: none;
 }
 
 .hero-carousel-slide {
+  flex: 0 0 100%;
   width: 100%;
   height: 100%;
   position: relative;
   overflow: hidden;
+  scroll-snap-align: start;
 }
 
 @keyframes heroZoom {
@@ -2698,6 +2707,25 @@ body.slideshow-active .about-section .container {
   display: block;
   transform-origin: center;
   animation: heroZoom 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Product Catalog Slide styling for contained fitting */
+.hero-carousel-slide.product-slide {
+  background-color: #f8f8f8; /* Soft white/light gray background matching catalog images */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-carousel-slide.product-slide img {
+  width: auto;
+  height: auto;
+  max-width: 95%;
+  max-height: 95%; /* Increased from 82% to 95% to make the product images bigger */
+  object-fit: contain;
+  mix-blend-mode: multiply; /* Blends white background out */
+  transform-origin: center;
+  animation: none; /* Disable zoom-in scale animation for cleaner static catalog display */
 }
 
 .hero-carousel-overlay {
@@ -2735,9 +2763,70 @@ body.slideshow-active .about-section .container {
   vertical-align: super;
 }
 
-/* Hide pagination dots completely as there is only 1 image */
+/* Premium Pagination Dots & Arrows for Hero Carousel */
 .hero-carousel-dots {
-  display: none !important;
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.75rem;
+  z-index: 5;
+}
+
+.hero-carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.hero-carousel-dot:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.hero-carousel-dot.active {
+  background-color: var(--color-white);
+  transform: scale(1.3);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+/* Glassmorphic Arrows for Hero Carousel */
+.hero-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(22, 43, 60, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--color-white);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+  transition: all var(--transition-fast);
+}
+
+.hero-carousel-arrow:hover {
+  background-color: rgba(22, 43, 60, 0.65);
+  border-color: rgba(255, 255, 255, 0.55);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.hero-carousel-arrow-prev {
+  left: 2rem;
+}
+
+.hero-carousel-arrow-next {
+  right: 2rem;
 }
 
 @media (max-width: 768px) {

@@ -6,7 +6,7 @@
   <title>Sheetal Furnitures | Almirah &amp; Lockers</title>
   <meta name="description"
     content="Explore our range of premium Almirah and Lockers — robust, elegant archiving solutions for modern offices by Sheetal Furnitures.">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
   <div class="scroll-progress-track" aria-hidden="true">
@@ -108,15 +108,45 @@
   <div class="mobile-drawer-overlay" id="mobile-drawer-overlay"></div>
   <!-- Hero Section -->
   <main class="product-page-main">
-    <section class="product-page-hero" id="hero-carousel">
+                                    <section class="product-page-hero" id="hero-carousel">
+      <!-- Carousel Arrows -->
+      <button class="hero-carousel-arrow hero-carousel-arrow-prev" aria-label="Previous Image" onclick="prevHeroSlide()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <button class="hero-carousel-arrow hero-carousel-arrow-next" aria-label="Next Image" onclick="nextHeroSlide()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+
       <div class="hero-carousel-track" id="hero-carousel-track">
         <div class="hero-carousel-slide">
-          <img src="images/storage.png" alt="Almirah & Lockers" loading="eager">
+          <img src="images/storage.png" alt="Almirah & Lockers Lifestyle" loading="eager">
+        </div>
+        <div class="hero-carousel-slide product-slide">
+          <img src="products/Archiving/Almirah and lockers/IMG_0013.jpeg" alt="Almirah & Lockers Detail 1" loading="lazy">
+        </div>
+        <div class="hero-carousel-slide product-slide">
+          <img src="products/Archiving/Almirah and lockers/IMG_3864.jpeg" alt="Almirah & Lockers Detail 2" loading="lazy">
+        </div>
+        <div class="hero-carousel-slide product-slide">
+          <img src="products/Archiving/Almirah and lockers/IMG_3881.jpeg" alt="Almirah & Lockers Detail 3" loading="lazy">
         </div>
       </div>
+
       <div class="hero-carousel-overlay"></div>
       <div class="hero-carousel-info">
         <h1>Almirah & Lockers<span class="hero-count">(11)</span></h1>
+      </div>
+
+      <!-- Carousel Pagination Dots -->
+      <div class="hero-carousel-dots" id="hero-carousel-dots">
+        <span class="hero-carousel-dot active" onclick="goToHeroSlide(0)"></span>
+        <span class="hero-carousel-dot" onclick="goToHeroSlide(1)"></span>
+        <span class="hero-carousel-dot" onclick="goToHeroSlide(2)"></span>
+        <span class="hero-carousel-dot" onclick="goToHeroSlide(3)"></span>
       </div>
     </section>
     <section class="product-page-content">
@@ -343,30 +373,94 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
   <script src="main.js"></script>
-    <!-- Hero Carousel Script -->
+                                    <!-- Hero Carousel Script -->
     <script>
     (function() {
       let heroSlideIndex = 0;
       const heroTrack = document.getElementById('hero-carousel-track');
       const heroDots = document.querySelectorAll('.hero-carousel-dot');
       const heroTotalSlides = heroDots.length;
+      let isTransitioning = false;
+      let autoPlayInterval = null;
 
       function goToHeroSlide(index) {
+        if (isTransitioning || !heroTrack) return;
+        isTransitioning = true;
         heroSlideIndex = index;
-        if (heroTrack) {
-          heroTrack.style.transform = 'translateX(-' + (heroSlideIndex * 100) + '%)';
-        }
+        const width = heroTrack.clientWidth;
+        heroTrack.scrollTo({
+          left: heroSlideIndex * width,
+          behavior: 'smooth'
+        });
+        
+        // Update dots
         heroDots.forEach(function(dot, i) {
           dot.classList.toggle('active', i === heroSlideIndex);
         });
+
+        setTimeout(function() {
+          isTransitioning = false;
+        }, 500);
       }
       window.goToHeroSlide = goToHeroSlide;
 
-      if (heroTotalSlides > 1) {
-        setInterval(function() {
-          goToHeroSlide((heroSlideIndex + 1) % heroTotalSlides);
-        }, 4000);
+      function nextHeroSlide() {
+        let nextIndex = (heroSlideIndex + 1) % heroTotalSlides;
+        goToHeroSlide(nextIndex);
       }
+      window.nextHeroSlide = nextHeroSlide;
+
+      function prevHeroSlide() {
+        let prevIndex = (heroSlideIndex - 1 + heroTotalSlides) % heroTotalSlides;
+        goToHeroSlide(prevIndex);
+      }
+      window.prevHeroSlide = prevHeroSlide;
+
+      // Sync scroll indicators on manual scroll (e.g. touch swipe or horizontal scroll wheel)
+      if (heroTrack) {
+        heroTrack.addEventListener('scroll', () => {
+          if (isTransitioning) return;
+          const width = heroTrack.clientWidth;
+          const newIndex = Math.round(heroTrack.scrollLeft / width);
+          if (newIndex !== heroSlideIndex && newIndex >= 0 && newIndex < heroTotalSlides) {
+            heroSlideIndex = newIndex;
+            heroDots.forEach(function(dot, i) {
+              dot.classList.toggle('active', i === heroSlideIndex);
+            });
+          }
+        });
+      }
+
+      // Auto play function
+      function startAutoPlay() {
+        if (heroTotalSlides > 1) {
+          autoPlayInterval = setInterval(nextHeroSlide, 5000);
+        }
+      }
+      
+      function resetAutoPlay() {
+        if (autoPlayInterval) {
+          clearInterval(autoPlayInterval);
+          startAutoPlay();
+        }
+      }
+
+      // Start auto play
+      startAutoPlay();
+
+      // Reset auto-play when user interacts with arrows/dots
+      const controls = document.querySelectorAll('.hero-carousel-arrow, .hero-carousel-dot');
+      controls.forEach(ctrl => {
+        ctrl.addEventListener('click', resetAutoPlay);
+      });
+      
+      // Handle window resize to adjust scroll position
+      window.addEventListener('resize', () => {
+        if (heroTrack) {
+          const width = heroTrack.clientWidth;
+          heroTrack.scrollLeft = heroSlideIndex * width;
+        }
+      });
     })();
     </script>
 </body>
